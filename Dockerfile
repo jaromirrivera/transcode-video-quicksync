@@ -1,6 +1,9 @@
-FROM denismakogon/ffmpeg-alpine:4.0-buildstage as build-stage
+# jaromirrivera/video-transcoding-qsv:v1.0
 
+FROM denismakogon/ffmpeg-alpine:4.0-buildstage as build-stage
 FROM jlesage/handbrake
+
+LABEL maintainer="Jaromir Rivera <jaromirrivera@gmail.com>"
 
 COPY --from=build-stage /tmp/fakeroot/bin /usr/local/bin
 COPY --from=build-stage /tmp/fakeroot/share /usr/local/share
