@@ -15,7 +15,6 @@ RUN apk add --no-cache --update --virtual=build-dependencies \
     ruby-bundler \
     ruby-rdoc \
     mkvtoolnix \
-    #mpv \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
     && apk add --update fdk-aac fdk-aac-dev && \
 echo "---- COMPILE SANDREAS MP4V2 ----" \
@@ -26,13 +25,6 @@ echo "---- COMPILE SANDREAS MP4V2 ----" \
     && cd mp4v2-master \
     && ./configure && make -j4 && make install && make distclean && rm -rf /tmp/* \
     && mkdir /data 
-# echo "---- COMPILE FDKAAC ----" \
-#     && cd /tmp/ \
-#     && wget https://github.com/nu774/fdkaac/archive/1.0.0.tar.gz \
-#     && tar xzf 1.0.0.tar.gz \
-#     && rm 1.0.0.tar.gz \
-#     && cd fdkaac-1.0.0 \
-#     && autoreconf -i && ./configure && make -j4 && make install && rm -rf /tmp/* && \
 RUN gem install video_transcoding
 
 WORKDIR /data
