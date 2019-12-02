@@ -1,0 +1,36 @@
+# jaromirrivera/video-transcoding-qsv:v1.2
+
+FROM jrottenberg/ffmpeg:4.2-alpine as build-final
+FROM denismakogon/ffmpeg-alpine:4.0-buildstage as build-stage
+FROM jlesage/handbrake
+
+LABEL maintainer="Jaromir Rivera <jaromirrivera@gmail.com>"
+
+COPY --from=build-stage /tmp/fakeroot/bin /usr/local/bin
+COPY --from=build-stage /tmp/fakeroot/share /usr/local/share
+COPY --from=build-stage /tmp/fakeroot/include /usr/local/include
+COPY --from=build-stage /tmp/fakeroot/lib /usr/local/lib
+
+COPY --from=build-final /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+
+RUN apk add --no-cache --update --virtual=build-dependencies \
+    make \
+    gcc \
+    g++ \
+    ruby \
+    ruby-bundler \
+    ruby-rdoc \
+    mkvtoolnix \
+    && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
+    && apk add --update fdk-aac fdk-aac-dev && \
+echo "---- COMPILE SANDREAS MP4V2 ----" \
+    && cd /tmp/ \
+    && wget https://github.com/sandreas/mp4v2/archive/master.zip \
+    && unzip master.zip \
+    && rm master.zip \
+    && cd mp4v2-master \
+    && ./configure && make -j4 && make install && make distclean && rm -rf /tmp/* \
+    && mkdir /data 
+RUN gem install video_transcoding
+
+WORKDIR /data

@@ -2,7 +2,7 @@
 
 supported_types = %w(mov flv wmv avi divx mpg mpeg mp4 mkv)
 output_dir = "./output"
-docker_command = "docker run --privileged --device=\"/dev/dri:/dev/dri\" -itv \"`pwd`\":/data --name transcode-video jaromirrivera/transcode-video-quicksync:v1.0"
+docker_command = "docker run --rm --privileged --device=\"/dev/dri:/dev/dri\" -itv \"`pwd`\":/data --name transcode-video jaromirrivera/transcode-video-quicksync:v1.1"
 
 glob = "./*\.{#{supported_types.join(',')}}"
 
