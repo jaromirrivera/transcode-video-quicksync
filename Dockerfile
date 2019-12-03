@@ -1,7 +1,8 @@
 # jaromirrivera/video-transcoding-qsv:v1.0
 
+FROM jrottenberg/ffmpeg:4.2-alpine as build-final
 FROM denismakogon/ffmpeg-alpine:4.0-buildstage as build-stage
-FROM jlesage/handbrake
+FROM jlesage/handbrake:latest
 
 LABEL maintainer="Jaromir Rivera <jaromirrivera@gmail.com>"
 
@@ -9,6 +10,8 @@ COPY --from=build-stage /tmp/fakeroot/bin /usr/local/bin
 COPY --from=build-stage /tmp/fakeroot/share /usr/local/share
 COPY --from=build-stage /tmp/fakeroot/include /usr/local/include
 COPY --from=build-stage /tmp/fakeroot/lib /usr/local/lib
+
+COPY --from=build-final /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
 
 RUN apk add --no-cache --update --virtual=build-dependencies \
     make \
