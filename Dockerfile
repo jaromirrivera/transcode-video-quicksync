@@ -2,7 +2,7 @@
 
 FROM jrottenberg/ffmpeg:4.2-alpine as build-final
 FROM denismakogon/ffmpeg-alpine:4.0-buildstage as build-stage
-FROM jlesage/handbrake:latest
+FROM jlesage/handbrake:v1.19.0
 
 LABEL maintainer="Jaromir Rivera <jaromirrivera@gmail.com>"
 
