@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker run --rm --privileged --device /dev/dri:/dev/dri -itv "$(pwd)":"$(pwd)" -w "$(pwd)" --name transcode-video jaromirrivera/transcode-video-quicksync:latest transcode-video "$@" 
