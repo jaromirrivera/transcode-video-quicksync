@@ -21,7 +21,7 @@ RUN apk add --no-cache --update --virtual=build-dependencies \
     ruby-bundler \
     ruby-rdoc \
     mkvtoolnix \
-    && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
+    && echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
     && apk add --update fdk-aac fdk-aac-dev && \
 echo "---- COMPILE SANDREAS MP4V2 ----" \
     && cd /tmp/ \
